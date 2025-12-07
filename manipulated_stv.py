@@ -183,9 +183,9 @@ def manipulated_voters_pref(manipulated_voters, manipulated_winner, true_winner,
 def make_manipulated_ballot(manipulated_winner, true_winner, alternatives):
 
     '''
-    The main idea of the manipulated ballot is to place the manipulated winner at the first place
-    to increase the probablitiy of being winner and move the true winner to the last place to deline 
-    the probablitiy of being winner. We implement it because we think it is the easiest and most direct way.
+    The main idea of the manipulated ballot is to place the manipulated winner at the first place 
+    to increase the probability of being winner and move the true winner to the last place to decline 
+    the probability of being winner. We implement it because we think it is the easiest and most direct way.
 
     '''
     all_alters = list(alternatives.keys())
@@ -198,7 +198,7 @@ def check_manipulation(original_rows, alternatives, ranks,
    
     new_rows = apply_manipulation(original_rows, manipulated_voters, manipulated_ballot)
     winners = stv_winner(new_rows, alternatives)
-    # Check if the winner is only one (the requirment asks only one outcome)
+    # Check if the winner is only one 
     if len(winners) != 1:
         return winners, False
     new_winner = winners[0]
@@ -244,6 +244,8 @@ if __name__ == "__main__":
 
     alt1, rows1 = read_election("election.txt")
 
+    k = 50
+    rows1 = rows1[:k]
     # Get the true winner
     true_winners1 = stv_winner(rows1, alt1)
     print("True winner under STV :", true_winners1)
@@ -253,11 +255,12 @@ if __name__ == "__main__":
     ranks1 = build_rank_of_alternatives(rows1, alt1)
 
     # Mannually change the size
+    max_size=10
     result = find_minimum_manipulated_voters(rows1, alt1, ranks1,
-                                     true_winner, max_size=1)
+                                     true_winner, max_size)
 
     if result is None:
-        print("The smallest group is not 1 voter")
+        print(f"The smallest group is not {max_size} voter")
 
     else:
         print("\nFind the small group: ")
