@@ -5,6 +5,8 @@ from collections import defaultdict
 import math
 import copy
 import itertools
+import time
+
 
 def read_election(filename="election.txt"):
 
@@ -253,18 +255,23 @@ if __name__ == "__main__":
 
     # Rank the preference
     ranks1 = build_rank_of_alternatives(rows1, alt1)
-
+    
+    start = time.perf_counter()
     # Mannually change the size
     max_size=10
     result = find_minimum_manipulated_voters(rows1, alt1, ranks1,
                                      true_winner, max_size)
+    end = time.perf_counter()
 
     if result is None:
         print(f"The smallest group is not {max_size} voter")
-
+        print("Running time:", end - start, "seconds")
     else:
         print("\nFind the small group: ")
         print("  Manipulated_winner:", result["manipulated_winner"], f"({alt1[result['manipulated_winner']]})")
         print("  Size:", result["size"])
         print("  Voters:", result["manipulated_voters"])
         print("  Ballot:", result["ballot"])
+        print("Running time:", end - start, "seconds")
+
+ 
