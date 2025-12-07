@@ -100,13 +100,18 @@ while len(active_alternatives) > 1:
                     active_alternatives[i] += weight
 
     print("Active alternatives:", active_alternatives)
+    
     # check for a tie
     if check_tie(active_alternatives):
         break
-    # eliminate the alternative with the lowest votes
-    eliminated = min(active_alternatives, key=active_alternatives.get)
+    
+    # eliminate the alternative(s) with the lowest votes
+    lowest_votes = min(active_alternatives.values())
+    eliminated = [alt for alt, score in active_alternatives.items() if score == lowest_votes]
     print("Eliminating:", eliminated)
-    active_alternatives.pop(eliminated)
+    # remove them
+    for cand in eliminated:
+        active_alternatives.pop(cand)
 
     # remove the eliminated alternative from rows which (currently) have it as a first preference
     for r in rows:
